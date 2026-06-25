@@ -1,8 +1,8 @@
 import asyncio
-from mcp.server.fastapi import FastApiServer
+from mcp.server import Server
 
-# Inicializamos el servidor MCP
-mcp_app = FastApiServer(name="mi_mcp_whatsapp")
+# Inicializamos el servidor MCP estándar
+mcp_app = Server("mi_mcp_whatsapp")
 
 @mcp_app.tool()
 async def calcular_balance(ingresos: float, gastos: float) -> str:
