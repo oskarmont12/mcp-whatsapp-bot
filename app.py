@@ -28,7 +28,7 @@ async def recibir_mensaje(request: Request):
             # 🔒 FILTRO DE SEGURIDAD ABSOLUTO
             # Reemplaza "TU_NUMERO_DE_TELEFONO" por tu número real (ej: "573XXXXXXXXX")
             # =========================================================================
-            if telefono_usuario == "TU_NUMERO_DE_TELEFONO":
+            if telefono_usuario == "573222558500":
                 # Si eres tú, la IA procesará el mensaje. 
                 # (Nota: Aquí conectaremos el modelo de IA más adelante)
                 respuesta_bot = f"Ejecutando tu orden: '{mensaje_texto}'. Conexión MCP exitosa."
