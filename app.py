@@ -1,13 +1,9 @@
 from fastapi import FastAPI, Request, Response
 import requests
-from mcp_server import mcp_app  # Importamos tu servidor MCP
 
 app = FastAPI()
 
-# Montamos el servidor MCP dentro de nuestra aplicación web
-app.mount("/mcp", mcp_app)
-
-# 1. Verificación del Webhook (Requisito que Meta/WhatsApp te pedirá más adelante)
+# 1. Verificación del Webhook (Requisito que Meta/WhatsApp te pedirá)
 @app.get("/webhook")
 async def verificar_webhook(request: Request):
     params = request.query_params
@@ -29,9 +25,8 @@ async def recibir_mensaje(request: Request):
             mensaje_texto = cambios['messages'][0]['text']['body']
             telefono_usuario = cambios['messages'][0]['from']
             
-            # Nota temporal: Aquí es donde conectaremos la IA más adelante.
-            # Por ahora, responderá confirmando que el mensaje llegó.
-            respuesta_bot = f"¡Hola! Recibí tu mensaje: '{mensaje_texto}'. El servidor MCP ya está conectado."
+            # Nota: Aquí conectaremos la IA más adelante.
+            respuesta_bot = f"¡Hola! Recibí tu mensaje: '{mensaje_texto}'. El servidor web está funcionando."
             
             # Enviar la respuesta de vuelta a WhatsApp
             enviar_a_whatsapp(telefono_usuario, respuesta_bot)
@@ -42,7 +37,6 @@ async def recibir_mensaje(request: Request):
     return {"status": "ok"}
 
 def enviar_a_whatsapp(telefono, texto):
-    # Estos valores los rellenaremos cuando configuremos Meta
     url = "https://graph.facebook.com/v20.0/TU_PHONE_NUMBER_ID/messages"
     headers = {
         "Authorization": "Bearer TU_ACCESS_TOKEN",
@@ -54,7 +48,6 @@ def enviar_a_whatsapp(telefono, texto):
         "type": "text",
         "text": {"body": texto}
     }
-    # Intentar enviar (dará error controlado hasta que configuremos las credenciales reales)
     try:
         requests.post(url, json=payload, headers=headers)
     except Exception as e:
